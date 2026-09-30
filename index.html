@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chaitanya Meesala | Portfolio</title>
+<meta name="description" content="Portfolio of Chaitanya Meesala, full-stack developer working with NestJS, React and PostgreSQL.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+<style>
+/* Simple one-page portfolio, dark theme */
+:root {
+  --bg: #0f172a;
+  --bg-alt: #111c33;
+  --card: #1e293b;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #38bdf8;
+  --border: #334155;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: "Poppins", "Segoe UI", sans-serif; line-height: 1.7; }
+a { color: var(--accent); text-decoration: none; }
+.container { max-width: 1100px; margin: 0 auto; padding-inline: 20px; }
+section { padding-block: 90px; }
+section:nth-of-type(odd) { background: var(--bg-alt); }
+.section-title { text-align: center; font-size: 2rem; font-weight: 600; margin-bottom: 10px; }
+.section-title span { color: var(--accent); }
+.section-sub { text-align: center; color: var(--muted); margin-bottom: 50px; }
+
+/* Navbar */
+.navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding-top: env(safe-area-inset-top, 0px); background: rgba(15, 23, 42, .9); backdrop-filter: blur(6px); border-bottom: 1px solid transparent; transition: border-color .3s; }
+.navbar.scrolled { border-bottom-color: var(--border); }
+.navbar .container { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { font-size: 1.4rem; font-weight: 700; color: var(--text); }
+.logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { color: var(--text); font-size: .95rem; transition: color .2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--accent); }
+.menu-btn { display: none; background: none; border: 0; color: var(--text); font-size: 1.4rem; cursor: pointer; }
+@media (max-width: 768px) {
+  .menu-btn { display: block; }
+  .nav-links { position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--bg); border-bottom: 1px solid var(--border); display: none; }
+  .nav-links.open { display: flex; }
+  .nav-links a { display: block; padding: 14px 20px; }
+}
+
+/* Hero */
+.hero { min-height: min(92vh, 760px); display: flex; align-items: center; padding-block: 110px 60px; }
+.hero .container { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap-reverse; }
+.hero-text { flex: 1 1 420px; min-width: 0; }
+.hero-text .hello { color: var(--accent); font-size: 1.1rem; }
+.hero-text h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.2; margin: 6px 0; }
+.hero-text h2 { font-size: clamp(1.2rem, 3vw, 1.7rem); font-weight: 500; color: var(--muted); min-height: 1.6em; }
+.typed { color: var(--text); border-right: 2px solid var(--accent); padding-right: 4px; }
+.hero-text p { color: var(--muted); max-width: 520px; margin: 18px 0 28px; }
+.buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-block; padding: 11px 26px; border-radius: 30px; font-weight: 500; border: 2px solid var(--accent); transition: .25s; }
+.btn-fill { background: var(--accent); color: var(--bg); }
+.btn-fill:hover { background: transparent; color: var(--accent); }
+.btn-outline { color: var(--accent); }
+.btn-outline:hover { background: var(--accent); color: var(--bg); }
+.socials { display: flex; gap: 14px; margin-top: 30px; }
+.socials a { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border); display: grid; place-items: center; color: var(--text); font-size: 1.1rem; transition: .25s; }
+.socials a:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+.hero-img { flex: 0 1 320px; display: flex; justify-content: center; }
+.avatar { width: min(300px, 70vw); aspect-ratio: 1; max-width: 100%; border-radius: 50%; border: 4px solid var(--accent); box-shadow: 0 0 40px rgba(56, 189, 248, .25); overflow: hidden; display: grid; place-items: center; background: var(--card); font-size: 5rem; font-weight: 700; color: var(--accent); }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+/* About */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.about-grid p { color: var(--muted); margin-bottom: 16px; }
+.info-list { list-style: none; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+.info-list li { padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; gap: 12px; }
+.info-list li:last-child { border-bottom: 0; }
+.info-list b { min-width: 80px; color: var(--text); font-weight: 500; }
+.info-list span { color: var(--muted); min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 768px) { .about-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* Skills */
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 22px; }
+.skill-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: .25s; }
+.skill-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.skill-card h3 { font-size: 1.05rem; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.skill-card h3 svg { color: var(--accent); }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag { font-size: .8rem; padding: 4px 12px; border-radius: 20px; background: rgba(56, 189, 248, .1); color: var(--accent); }
+
+/* Timeline */
+.timeline { position: relative; max-width: 780px; margin: 0 auto; padding-left: 30px; border-left: 2px solid var(--border); }
+.t-item { position: relative; margin-bottom: 36px; }
+.t-item:last-child { margin-bottom: 0; }
+.t-item::before { content: ""; position: absolute; left: -39px; top: 6px; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 3px solid var(--bg); }
+.t-date { font-size: .85rem; color: var(--accent); }
+.t-item h3 { font-size: 1.2rem; margin-top: 2px; }
+.t-place { color: var(--muted); font-size: .95rem; margin-bottom: 8px; }
+.t-item ul { padding-left: 18px; color: var(--muted); }
+.t-item li { margin-bottom: 4px; }
+
+/* Projects */
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 26px; }
+.project-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: .25s; }
+.project-card:hover { transform: translateY(-6px); border-color: var(--accent); }
+.project-top { height: 140px; display: grid; place-items: center; font-size: 2.8rem; color: #fff; }
+.p1 { background: linear-gradient(135deg, #16a34a, #065f46); }
+.p2 { background: linear-gradient(135deg, #2563eb, #1e3a8a); }
+.p3 { background: linear-gradient(135deg, #ea580c, #9a3412); }
+.project-body { padding: 22px; display: flex; flex-direction: column; flex: 1; }
+.project-body h3 { font-size: 1.2rem; }
+.project-meta { font-size: .85rem; color: var(--accent); margin-bottom: 10px; }
+.project-body p { color: var(--muted); font-size: .93rem; }
+.project-body ul { color: var(--muted); font-size: .9rem; padding-left: 18px; margin: 10px 0 16px; }
+.project-body .tags { margin-top: auto; }
+.project-links { margin-top: 16px; display: flex; gap: 16px; font-size: .9rem; }
+.project-links a:hover { text-decoration: underline; }
+
+/* Certifications */
+.cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 20px; }
+.cert { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 22px; display: flex; gap: 16px; align-items: flex-start; }
+.cert > svg { font-size: 1.8rem; color: var(--accent); flex: none; }
+.cert h3 { font-size: 1rem; }
+.cert p { color: var(--muted); font-size: .88rem; }
+
+/* Contact */
+.contact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; max-width: 760px; margin: 0 auto; }
+@media (max-width: 600px) { .contact-grid { grid-template-columns: minmax(0, 1fr); } }
+.contact-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 26px 20px; text-align: center; transition: .25s; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.contact-card:hover { border-color: var(--accent); }
+.contact-card > svg { font-size: 1.6rem; color: var(--accent); margin-bottom: 10px; }
+.contact-card h3 { font-size: 1rem; margin-bottom: 4px; }
+.contact-card a, .contact-card span { color: var(--muted); font-size: .92rem; overflow-wrap: anywhere; }
+.contact-card a:hover { color: var(--accent); }
+
+
+/* Scroll reveal */
+.reveal { transition: opacity .7s ease, transform .7s ease; }
+.reveal.hidden-up { opacity: 0; transform: translateY(30px); }
+@media (prefers-reduced-motion: reduce) { .reveal, .reveal.hidden-up { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+.to-top { position: fixed; right: 20px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: var(--bg); display: grid; place-items: center; opacity: 0; pointer-events: none; transition: .3s; }
+.to-top.show { opacity: 1; pointer-events: auto; }
+</style>
+
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="#home" class="logo">Chaitanya<span>.</span></a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="home">
+  <div class="container">
+    <div class="hero-text">
+      <p class="hello">Hi there, I'm</p>
+      <h1>Chaitanya Meesala</h1>
+      <h2>I'm a <span class="typed" id="typed">Backend Developer</span></h2>
+      <p>Graduate Engineer Trainee at AKSI Aerospace. I build web applications with NestJS, React and PostgreSQL, and I enjoy working on backend systems and REST APIs.</p>
+      <div class="buttons">
+        <a href="Chaitanya_Meesala_Resume.pdf" class="btn btn-fill" target="_blank" rel="noopener"><i class="fa-solid fa-download"></i> Resume</a>
+        <a href="#contact" class="btn btn-outline">Contact Me</a>
+      </div>
+      <div class="socials">
+        <a href="https://github.com/Chaitanya0021" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/chaitanya-meesala-a5694a2b0" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="mailto:meesalachaitanya1@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="hero-img">
+      <!-- Put your photo in the same folder, named profile.jpg. Your initials show until then. -->
+      <div class="avatar" id="avatar"><img src="profile.jpg" alt="Chaitanya Meesala" id="avatarImg"></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="about">
+  <div class="container reveal">
+    <h2 class="section-title">About <span>Me</span></h2>
+    <p class="section-sub">A little bit about who I am</p>
+    <div class="about-grid">
+      <div>
+        <p>I'm a software engineer from Andhra Pradesh with hands-on experience in full-stack web development. I recently finished my B.Tech in Information Technology at VR Siddhartha Engineering College and now work as a Graduate Engineer Trainee at AKSI Aerospace.</p>
+        <p>At AKSI I work with the KhetPilot and RoboClave teams, mostly on the backend and database side. I've worked on a drone-spraying booking platform for farmers, and I'm the lead developer on AdaptiveHire, an online assessment platform for hiring.</p>
+        <p>I want to keep growing as a developer and contribute to building scalable backend systems and RESTful APIs.</p>
+      </div>
+      <ul class="info-list">
+        <li><b>Name</b><span>Chaitanya Sai Sankar Meesala</span></li>
+        <li><b>Role</b><span>Graduate Engineer Trainee</span></li>
+        <li><b>Degree</b><span>B.Tech IT, CGPA 8.60</span></li>
+        <li><b>Location</b><span>Vizianagaram, Andhra Pradesh</span></li>
+        <li><b>Email</b><span>meesalachaitanya1@gmail.com</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container reveal">
+    <h2 class="section-title">My <span>Skills</span></h2>
+    <p class="section-sub">Technologies I work with</p>
+    <div class="skills-grid">
+      <div class="skill-card"><h3><i class="fa-solid fa-code"></i> Languages</h3>
+        <div class="tags"><span class="tag">C++</span><span class="tag">Python</span><span class="tag">Java</span><span class="tag">TypeScript</span><span class="tag">JavaScript</span></div></div>
+      <div class="skill-card"><h3><i class="fa-solid fa-server"></i> Backend</h3>
+        <div class="tags"><span class="tag">NestJS</span><span class="tag">Node.js</span><span class="tag">FastAPI</span><span class="tag">REST APIs</span><span class="tag">WebSockets</span></div></div>
+      <div class="skill-card"><h3><i class="fa-brands fa-react"></i> Frontend</h3>
+        <div class="tags"><span class="tag">React</span><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Flutter</span></div></div>
+      <div class="skill-card"><h3><i class="fa-solid fa-database"></i> Database</h3>
+        <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">TypeORM</span><span class="tag">Redis</span><span class="tag">MySQL</span></div></div>
+      <div class="skill-card"><h3><i class="fa-solid fa-screwdriver-wrench"></i> Tools</h3>
+        <div class="tags"><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">Postman</span><span class="tag">Docker</span><span class="tag">VS Code</span><span class="tag">Android Studio</span></div></div>
+      <div class="skill-card"><h3><i class="fa-solid fa-diagram-project"></i> Core Concepts</h3>
+        <div class="tags"><span class="tag">System Design</span><span class="tag">Data Structures &amp; Algorithms</span><span class="tag">DBMS</span><span class="tag">RESTful APIs</span><span class="tag">Deep Learning</span><span class="tag">Time Series Forecasting</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="container reveal">
+    <h2 class="section-title">Experience &amp; <span>Education</span></h2>
+    <p class="section-sub">My journey so far</p>
+    <div class="timeline">
+      <div class="t-item">
+        <span class="t-date">April 2026 – Present</span>
+        <h3>Graduate Engineer Trainee</h3>
+        <p class="t-place">AKSI Aerospace</p>
+        <ul>
+          <li>Working on real-time projects for the KhetPilot and RoboClave teams alongside experienced engineers.</li>
+          <li>Building backend services and database work for new products, and improving existing ones.</li>
+          <li>Tech stack: NestJS, React, PostgreSQL, FastAPI, Redis.</li>
+        </ul>
+      </div>
+      <div class="t-item">
+        <span class="t-date">Nov 2022 – Apr 2026</span>
+        <h3>B.Tech in Information Technology</h3>
+        <p class="t-place">Velagapudi Ramakrishna Siddhartha Engineering College · CGPA 8.60</p>
+        <ul>
+          <li>Participated in coding contests at AFOSEC, a national-level tech fest.</li>
+          <li>Organised events for IT students focused on technical and programming skills.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="container reveal">
+    <h2 class="section-title">My <span>Projects</span></h2>
+    <p class="section-sub">Some of the things I've worked on</p>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-top p1"><i class="fa-solid fa-seedling"></i></div>
+        <div class="project-body">
+          <h3>KhetPilot</h3>
+          <p class="project-meta">June 2026 · Core backend developer</p>
+          <p>A platform for farmers to book drone spraying services for their fields.</p>
+          <ul>
+            <li>Worked on three products: Kisan Shakti (farmer app), the Pilot app, and the Admin &amp; Hub Manager website.</li>
+            <li>Automatic pilot assignment based on ratings and workload, with live pilot location over WebSockets.</li>
+            <li>Apps available in English, Hindi and Telugu.</li>
+          </ul>
+          <div class="tags"><span class="tag">NestJS</span><span class="tag">PostgreSQL</span><span class="tag">TypeORM</span><span class="tag">React</span><span class="tag">Flutter</span></div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top p2"><i class="fa-solid fa-clipboard-check"></i></div>
+        <div class="project-body">
+          <h3>AdaptiveHire</h3>
+          <p class="project-meta">July 2026 · Lead developer</p>
+          <p>An online assessment platform for hiring, where question difficulty adapts to how the candidate is answering.</p>
+          <ul>
+            <li>Tests aptitude, reasoning, verbal ability and personality traits.</li>
+            <li>Generates a report for each candidate with scores and a behavioural profile (leadership, adaptability, teamwork and more), downloadable as a PDF.</li>
+            <li>Proctoring with tab-switch, full-screen and camera checks.</li>
+          </ul>
+          <div class="tags"><span class="tag">NestJS</span><span class="tag">React</span><span class="tag">PostgreSQL</span><span class="tag">Redis</span><span class="tag">BullMQ</span></div>
+          <div class="project-links"><a href="https://adaptivehire.pages.dev" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a></div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-top p3"><i class="fa-solid fa-chart-line"></i></div>
+        <div class="project-body">
+          <h3>Tomato &amp; Onion Price Forecasting</h3>
+          <p class="project-meta">July 2025 – Nov 2025 · Academic project</p>
+          <p>Predicts tomato and onion prices for the coming days using past years' data and weather forecasts.</p>
+          <ul>
+            <li>Used SARIMA and LSTM models for tomato price prediction.</li>
+            <li>Added a Prophet and XGBoost ensemble to capture festival effects and sudden price changes in onion prices.</li>
+          </ul>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Deep Learning</span><span class="tag">LSTM</span><span class="tag">XGBoost</span><span class="tag">Prophet</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="container reveal">
+    <h2 class="section-title">My <span>Certifications</span></h2>
+    <p class="section-sub">Courses and certificates I've completed</p>
+    <div class="cert-grid">
+      <div class="cert"><i class="fa-brands fa-aws"></i><div><h3>AWS Certified Cloud Practitioner</h3><p>Amazon Web Services · Aug 2025</p></div></div>
+      <div class="cert"><i class="fa-solid fa-database"></i><div><h3>DBMS and MySQL Course</h3><p>Udemy · May 2024</p></div></div>
+      <div class="cert"><i class="fa-solid fa-certificate"></i><div><h3>Programming Essentials in C++</h3><p>Cisco · Aug 2023</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container reveal">
+    <h2 class="section-title">Get In <span>Touch</span></h2>
+    <p class="section-sub">Feel free to reach out for opportunities or just to connect</p>
+    <div class="contact-grid">
+      <div class="contact-card"><i class="fa-solid fa-envelope"></i><h3>Email</h3><a href="mailto:meesalachaitanya1@gmail.com">meesalachaitanya1@gmail.com</a></div>
+      <div class="contact-card"><i class="fa-solid fa-phone"></i><h3>Phone</h3><span>+91 7386365389</span></div>
+      <div class="contact-card"><i class="fa-brands fa-linkedin"></i><h3>LinkedIn</h3><a href="https://www.linkedin.com/in/chaitanya-meesala-a5694a2b0" target="_blank" rel="noopener">chaitanya-meesala</a></div>
+      <div class="contact-card"><i class="fa-brands fa-github"></i><h3>GitHub</h3><a href="https://github.com/Chaitanya0021" target="_blank" rel="noopener">Chaitanya0021</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<a href="#home" class="to-top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></a>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Show initials if profile.jpg is missing
+  var img = document.getElementById("avatarImg");
+  function noPhoto() { document.getElementById("avatar").textContent = "CM"; }
+  if (img.complete && img.naturalWidth === 0) noPhoto(); else img.addEventListener("error", noPhoto);
+
+  // Typing effect
+  var words = ["Backend Developer", "Full-Stack Developer", "Software Engineer", "React Developer"];
+  var el = document.getElementById("typed"), w = 0, c = words[0].length, deleting = true;
+  function tick() {
+    var word = words[w];
+    c += deleting ? -1 : 1;
+    el.textContent = word.slice(0, c);
+    var delay = deleting ? 50 : 100;
+    if (!deleting && c === word.length) { deleting = true; delay = 1800; }
+    else if (deleting && c === 0) { deleting = false; w = (w + 1) % words.length; delay = 300; }
+    setTimeout(tick, delay);
+  }
+  if (!reduce) setTimeout(tick, 2000);
+
+  // Mobile menu
+  var links = document.getElementById("navLinks");
+  document.getElementById("menuBtn").addEventListener("click", function () { links.classList.toggle("open"); });
+  links.addEventListener("click", function (e) { if (e.target.tagName === "A") links.classList.remove("open"); });
+
+  // Navbar border, back-to-top button, active link
+  var navbar = document.getElementById("navbar"), toTop = document.getElementById("toTop");
+  var navAs = links.querySelectorAll("a"), sections = document.querySelectorAll("header[id], section[id]");
+  function onScroll() {
+    var y = window.scrollY;
+    navbar.classList.toggle("scrolled", y > 20);
+    toTop.classList.toggle("show", y > 500);
+    var current = "home";
+    sections.forEach(function (s) { if (y >= s.offsetTop - 120) current = s.id; });
+    if (current === "certifications") current = "projects";
+    navAs.forEach(function (a) { a.classList.toggle("active", a.getAttribute("href") === "#" + current); });
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  // Fade sections in as they scroll into view (only ones below the first screen)
+  if (!reduce && "IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.remove("hidden-up"); io.unobserve(en.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll(".reveal").forEach(function (r) {
+      if (r.getBoundingClientRect().top > window.innerHeight) { r.classList.add("hidden-up"); io.observe(r); }
+    });
+  }
+})();
+</script>
+
+</html>
